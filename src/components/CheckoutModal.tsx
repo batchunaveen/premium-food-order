@@ -13,6 +13,7 @@ export function CheckoutModal() {
     const clearCart = useStore((state) => state.clearCart);
 
     const [step, setStep] = useState<1 | 2 | 3 | 4>(1); // 4 = Success
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // Customer Info State
     const [name, setName] = useState("");
@@ -31,14 +32,42 @@ export function CheckoutModal() {
         }, 300);
     };
 
-    const processPayment = () => {
+    const processPayment = async () => {
+        setIsProcessing(true);
         // Placeholder for Clover Payment Gateway
+        // Normally you would process the card here.
+
+        const orderId = Math.floor(Math.random() * 900000) + 100000;
+        const selectedDate = useStore.getState().selectedDate; // need to get this directly or bring it into component state
+
+        const orderData = {
+            orderId,
+            orderDate: selectedDate || new Date(),
+            customer: { name, email, phone },
+            items: cart,
+            total,
+        };
+
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderData }),
+            });
+
+            if (!response.ok) {
+                console.error("Failed to send order emails", await response.text());
+                // Still proceed to success page in standard flow, or handle error
+            } else {
+                console.log("Emails sent successfully");
+            }
+        } catch (error) {
+            console.error("Error calling checkout API:", error);
+        }
+
+        setIsProcessing(false);
         setStep(4); // Move to success step
         clearCart();
-
-        // Trigger placeholder emails
-        console.log("SENDING EVENT: Confirmation Email Sent to " + email);
-        console.log("SENDING EVENT: Order Notification Sent to Owner");
     };
 
     if (!isCheckoutOpen) return null;
@@ -251,9 +280,17 @@ export function CheckoutModal() {
                         {step === 3 && (
                             <button
                                 onClick={processPayment}
-                                className="flex-1 bg-accent text-white py-4 px-6 rounded-xl font-bold tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98] shadow-lg shadow-accent/30"
+                                disabled={isProcessing}
+                                className="flex-1 bg-accent text-white py-4 px-6 rounded-xl font-bold tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98] shadow-lg shadow-accent/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
                             >
-                                Pay ${(total).toFixed(2)}
+                                {isProcessing ? (
+                                    <>
+                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        Processing...
+                                    </>
+                                ) : (
+                                    `Pay $${total.toFixed(2)}`
+                                )}
                             </button>
                         )}
 
