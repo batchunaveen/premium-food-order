@@ -19,7 +19,7 @@ export default function Home() {
             if (items.length === 0) return null;
 
             return (
-              <section key={category} id={`category-${category}`} className="scroll-mt-32">
+              <section key={category} id={`category-${category.replace(/\s+/g, '-').toLowerCase()}`} className="scroll-mt-32">
                 <h2 className="text-3xl font-black tracking-tight mb-8 flex items-center gap-4">
                   {category}
                   <span className="hidden sm:block h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />

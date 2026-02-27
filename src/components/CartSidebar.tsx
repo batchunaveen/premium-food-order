@@ -19,11 +19,11 @@ export function CartSidebar() {
     if (cart.length === 0) {
         return (
             <div className="w-80 shrink-0 hidden xl:block">
-                <div className="sticky top-24 h-[calc(100vh-8rem)] bg-neutral-50 rounded-3xl border border-neutral-100 flex flex-col items-center justify-center p-8 text-center text-neutral-400">
-                    <div className="w-24 h-24 mb-6 rounded-full bg-neutral-100 flex items-center justify-center">
+                <div className="sticky top-24 h-[calc(100vh-8rem)] bg-neutral-50 dark:bg-neutral-900 rounded-3xl border border-neutral-100 dark:border-neutral-800 flex flex-col items-center justify-center p-8 text-center text-neutral-400 dark:text-neutral-500">
+                    <div className="w-24 h-24 mb-6 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
                         <span className="text-4xl">🛒</span>
                     </div>
-                    <h3 className="text-lg font-bold text-neutral-900 mb-2">Your cart is empty</h3>
+                    <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">Your cart is empty</h3>
                     <p className="text-sm">Add some delicious items from our menu to get started.</p>
                 </div>
             </div>

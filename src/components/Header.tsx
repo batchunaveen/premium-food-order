@@ -1,12 +1,13 @@
 "use client";
 
-import { ShoppingBag, Menu, User } from "lucide-react";
+import { ShoppingBag, Menu, User, Receipt } from "lucide-react";
 import { LocationSelector } from "./LocationSelector";
 import { useStore } from "@/store/useStore";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { MobileCart } from "./MobileCart";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
     const cart = useStore((state) => state.cart);
@@ -34,6 +35,8 @@ export function Header() {
                     </div>
 
                     <div className="flex items-center gap-2 md:gap-4">
+                        <ThemeToggle />
+
                         <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
                             <User className="w-5 h-5" />
                         </button>
@@ -55,7 +58,7 @@ export function Header() {
                         </button>
 
                         <button className="hidden xl:flex relative items-center justify-center w-10 h-10 rounded-full bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors">
-                            <User className="w-5 h-5" />
+                            <Receipt className="w-5 h-5" />
                         </button>
                     </div>
                 </div>

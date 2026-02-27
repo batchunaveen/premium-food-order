@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "Order the best artisan food delivered to your door.",
 };
 
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import { FloatingCartButton } from "@/components/FloatingCartButton";
 import { CheckoutModal } from "@/components/CheckoutModal";
@@ -27,16 +28,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-accent/30`}
       >
-        <Header />
-        <main className="min-h-screen pt-4 pb-24 md:pb-4">
-          {children}
-        </main>
-        <FloatingCartButton />
-        <CheckoutModal />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="min-h-screen pt-4 pb-24 md:pb-4">
+            {children}
+          </main>
+          <FloatingCartButton />
+          <CheckoutModal />
+        </ThemeProvider>
       </body>
     </html>
   );

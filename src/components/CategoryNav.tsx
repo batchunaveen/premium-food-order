@@ -19,7 +19,15 @@ export function CategoryNav() {
                     {CATEGORIES.map((category) => (
                         <button
                             key={category}
-                            onClick={() => setActiveCategory(category)}
+                            onClick={() => {
+                                setActiveCategory(category);
+                                const element = document.getElementById(`category-${category.replace(/\s+/g, '-').toLowerCase()}`);
+                                if (element) {
+                                    // Make sure we account for the sticky header (approx 120px offset)
+                                    const y = element.getBoundingClientRect().top + window.scrollY - 120;
+                                    window.scrollTo({ top: y, behavior: 'smooth' });
+                                }
+                            }}
                             className={cn(
                                 "whitespace-nowrap rounded-full lg:rounded-xl px-4 py-2 flex items-center gap-2 text-sm font-medium transition-all duration-200 min-w-max",
                                 activeCategory === category

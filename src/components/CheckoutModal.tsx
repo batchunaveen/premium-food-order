@@ -32,16 +32,19 @@ export function CheckoutModal() {
         }, 300);
     };
 
+    const [orderId, setOrderId] = useState<number | null>(null);
+
     const processPayment = async () => {
         setIsProcessing(true);
         // Placeholder for Clover Payment Gateway
         // Normally you would process the card here.
 
-        const orderId = Math.floor(Math.random() * 900000) + 100000;
+        const newOrderId = Math.floor(Math.random() * 900000) + 100000;
+        setOrderId(newOrderId);
         const selectedDate = useStore.getState().selectedDate; // need to get this directly or bring it into component state
 
         const orderData = {
-            orderId,
+            orderId: newOrderId,
             orderDate: selectedDate || new Date(),
             customer: { name, email, phone },
             items: cart,
@@ -241,7 +244,7 @@ export function CheckoutModal() {
                                 </p>
                                 <div className="bg-neutral-50 dark:bg-neutral-800 p-6 rounded-2xl mt-8 w-full max-w-sm flex justify-between font-bold">
                                     <span className="text-neutral-500">Order ID:</span>
-                                    <span>#{Math.floor(Math.random() * 900000) + 100000}</span>
+                                    <span>#{orderId}</span>
                                 </div>
                             </div>
                         )}

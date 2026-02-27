@@ -52,7 +52,7 @@ export function MobileCart({ isOpen, onClose }: MobileCartProps) {
 
                         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-6 hide-scrollbar">
                             {cart.length === 0 ? (
-                                <div className="flex-1 flex flex-col items-center justify-center text-neutral-400 py-12">
+                                <div className="flex-1 flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 py-12">
                                     <span className="text-4xl mb-4">🛒</span>
                                     <p>Your cart is empty</p>
                                 </div>
